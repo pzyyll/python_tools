@@ -2,19 +2,13 @@
 # @Date: "2021-07-14"
 # @Description: 排行数据Dict
 
+import sys
 import random
 from typing import Hashable
 
 SKIPLIST_P = 0.25
 MAX_LEVEL = 32
 
-
-# inline int skRandomLevel() {
-#     int lvl = 1;
-#     while ((rand() < (SKIPLIST_P * RAND_MAX)) && (lvl < MAXLEVEL))
-#         ++lvl;
-#     return lvl;
-# }
 
 def skRandomLevel():
     lvl = 1
@@ -23,8 +17,28 @@ def skRandomLevel():
     return lvl
 
 
-class SkipNode(object):
-    pass
+class SkipListLevel(object):
+    def __init__(self):
+        super(SkipListLevel, self).__init__()
+        self.forward = None
+        self.span = 0
+
+
+class SkipListNode(object):
+    def __init__(self, level, value):
+        super(SkipListNode, self).__init__()
+        self.value = value
+        self.backward = None
+        self.levels = [SkipListLevel() for _ in level]
+
+
+class SkipList(object):
+    def __init__(self):
+        super(SkipList, self).__init__()
+        self._head = SkipListNode(MAX_LEVEL, None)
+        self._tail = None
+        self._lenth = 0
+        self._level = 0
 
 
 class RankDict(object):
